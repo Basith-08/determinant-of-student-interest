@@ -9,11 +9,11 @@ Abstract: This application is made for students who are confused about determini
 
 - Home
 
-![images](./images/home.png) 
+![home](./images/home.png) 
 
 - Result
 
-![images](./images/result.png) 
+![result](./images/result.png) 
 
 ## Install & Dependence
 - python
