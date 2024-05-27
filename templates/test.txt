@@ -1,0 +1,100 @@
+## Rules 	
+	
+	A01 Seni music
+
+B01 Suka bernyanyi
+	suka_bernyanyi
+B02 Suka bermain music
+	suka_bermain_musik
+B03 Memiliki konsentrasi dan ingatan yang kuat
+	memiliki_konsentrasi_dan_ingatan_yang_kuat
+B04 Mempunyai fisik yang sehat
+	mempunyai_fisik_yang_sehat
+
+
+	A02 Seni tari
+
+B03 Memiliki konsentrasi dan ingatan yang kuat
+	memiliki_konsentrasi_dan_ingatan_yang_kuat
+B04 Mempunyai fisik yang sehat
+	mempunyai_fisik_yang_sehat
+B05 Suka menari
+	suka_menari
+B06 Suka meniru gerakan tubuh
+	suka_meniru_gerakan_tubuh
+B07 Suka bekerja sama dalam tim
+	suka_bekerja_sama_dalam_tim
+
+
+	A03 Pencak silat
+
+B04 Mempunyai fisik yang sehat
+	mempunyai_fisik_yang_sehat
+B07 Suka bekerja sama dalam tim
+	suka_bekerja_sama_dalam_tim
+B08 Menyukai bela diri (pencak silat)
+	menyukai_bela_diri
+B09 Memiliki jiwa pantang menyerah
+	memiliki_jiwa_pantang_menyerah
+B10 Mempunyai mental yang kuat
+	mempunyai_mental_yang_kuat 
+
+
+	A04 Futsal
+
+B04 Mempunyai fisik yang sehat
+	mempunyai_fisik_yang_sehat
+B07 Suka bekerja sama dalam tim
+	suka_bekerja_sama_dalam_tim
+B09 Memiliki jiwa pantang menyerah
+	memiliki_jiwa_pantang_menyerah
+B10 Mempunyai mental yang kuat
+	mempunyai_mental_yang_kuat 
+B11 Suka bermain futsal atau bola
+	suka_bermain_futsal_atau_bola
+B12 Memiliki karakter disiplin
+	memiliki_karakter_disiplin
+B13 Mempunyai berat ideal
+	mempunyai_berat_ideal	
+
+
+	A05 Pramuka 
+
+B04 Mempunyai fisik yang sehat
+	mempunyai_fisik_yang_sehat
+B07 Suka bekerja sama dalam tim
+	suka_bekerja_sama_dalam_tim
+B09 Memiliki jiwa pantang menyerah
+	memiliki_jiwa_pantang_menyerah
+B10 Mempunyai mental yang kuat
+	mempunyai_mental_yang_kuat
+B12 Memiliki karakter disiplin
+	memiliki_karakter_disiplin
+B14 Memiliki jiwa kejujuran
+	memiliki_jiwa_kejujuran
+B15 Tidak mudah takut akan alam sekitar
+	tidak_mudah_takut_akan_alam_sekitar
+B16 Memiliki jiwa kepemimpinan
+	memiliki_jiwa_kepemimpinan
+B17 Memiliki rasa bertanggung jawab
+	memiliki_rasa_bertanggung_jawab
+
+
+	A06 Paskibra
+
+B04 Mempunyai fisik yang sehat
+	mempunyai_fisik_yang_sehat
+B07 Suka bekerja sama dalam tim
+	suka_bekerja_sama_dalam_tim
+B09 Memiliki jiwa pantang menyerah
+	memiliki_jiwa_pantang_menyerah
+B10 Mempunyai mental yang kuat
+	mempunyai_mental_yang_kuat
+B12 Memiliki karakter disiplin
+	memiliki_karakter_disiplin
+B18 Mempunyai tinggi ideal
+	mempunyai_tinggi_ideal
+B19 Mempunyai postur tegap
+	mempunyai_postur_tegap
+B20 Mampu melakukan PBB
+	mampu_melakukan_PBB
