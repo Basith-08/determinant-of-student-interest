@@ -2,125 +2,70 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Penentuan Ekstrakurikuler Siswa</title>
+    <title>Sistem Pakar Rekomendasi Ekstrakurikuler</title>
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
     />
+    <style>
+      .card {
+        
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let currentQuestion = 0;
-        const questions = [
-          { text: "suka bernyanyi", fact: "suka_bernyanyi" },
-          { text: "suka bermain musik?", fact: "suka_bermain_musik" },
-          {
-            text: "memiliki konsentrasi dan ingatan yang kuat?",
-            fact: "memiliki_konsentrasi_dan_ingatan_yang_kuat",
+      async function submitAnswer(answer) {
+        const response = await fetch("/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-          {
-            text: "mempunyai fisik yang sehat",
-            fact: "mempunyai_fisik_yang_sehat",
-          },
-          { text: "suka menari", fact: "suka_menari" },
-          {
-            text: "suka meniru gerakan tubuh",
-            fact: "suka_meniru_gerakan_tubuh",
-          },
-          {
-            text: "suka bekerja sama dalam tim",
-            fact: "suka_bekerja_sama_dalam_tim",
-          },
-          {
-            text: "menyukai bela diri (pencak silat)",
-            fact: "menyukai_bela_diri",
-          },
-          {
-            text: "memiliki jiwa pantang menyerah",
-            fact: "memiliki_jiwa_pantang_menyerah",
-          },
-          {
-            text: "mempunyai mental yang kuat",
-            fact: "mempunyai_mental_yang_kuat",
-          },
-          {
-            text: "suka bermain futsal atau bola",
-            fact: "suka_bermain_futsal_atau_bola",
-          },
-          {
-            text: "memiliki karakter disiplin",
-            fact: "memiliki_karakter_disiplin",
-          },
-          { text: "mempunyai berat ideal", fact: "mempunyai_berat_ideal" },
-          { text: "memiliki jiwa kejujuran", fact: "memiliki_jiwa_kejujuran" },
-          {
-            text: "tidak mudah takut akan alam sekitar",
-            fact: "tidak_mudah_takut_akan_alam_sekitar",
-          },
-          {
-            text: "memiliki jiwa kepemimpinan",
-            fact: "memiliki_jiwa_kepemimpinan",
-          },
-          {
-            text: "memiliki rasa bertanggung jawab",
-            fact: "memiliki_rasa_bertanggung_jawab",
-          },
-          { text: "mempunyai tinggi ideal", fact: "mempunyai_tinggi_ideal" },
-          { text: "mempunyai postur tegap", fact: "mempunyai_postur_tegap" },
-          { text: "mampu melakukan PBB", fact: "mampu_melakukan_PBB" },
-        ];
+          body: JSON.stringify({ answer: answer }),
+        });
 
-        function showQuestion() {
-          if (currentQuestion < questions.length) {
-            document.getElementById("question").innerText =
-              questions[currentQuestion].text;
-          } else {
-            document.getElementById("question-form").submit();
-          }
-        }
-
-        function nextQuestion(answer) {
-          if (answer === "yes") {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "facts";
-            input.value = questions[currentQuestion].fact;
-            document.getElementById("question-form").appendChild(input);
-          }
-          currentQuestion++;
-          showQuestion();
-        }
-
-        document
-          .getElementById("yes-button")
-          .addEventListener("click", function () {
-            nextQuestion("yes");
+        const data = await response.json();
+        if (data.done) {
+          const params = new URLSearchParams({
+            results: JSON.stringify(data.results),
           });
-
-        document
-          .getElementById("no-button")
-          .addEventListener("click", function () {
-            nextQuestion("no");
-          });
-
-        showQuestion();
-      });
+          window.location.href = `/results?${params.toString()}`;
+        } else {
+          document.getElementById(
+            "question"
+          ).innerText = `Apakah Anda ${data.interest}?`;
+        }
+      }
     </script>
   </head>
   <body>
     <div class="container">
-      <h1 class="mt-5">
-        Jawab Pertanyaan Berikut Untuk Menentukan Ekskul yang Cocok untuk Kamu
-      </h1>
-      <form id="question-form" action="/result" method="post">
-        <div class="lead">Apakah Anda <span id="question"></span>?</div>
-        <button type="button" id="yes-button" class="btn btn-primary">
-          Ya
-        </button>
-        <button type="button" id="no-button" class="btn btn-secondary">
-          Tidak
-        </button>
-      </form>
+      <div class="">
+        <div class="card text-center">
+          <div class="card-header bg-primary text-white">
+            Sistem Pakar : Penentu Ekstrakurikuler siswa
+          </div>
+          <div class="card-body">
+            <p class="card-text" id="question">Apakah Anda {{ interest }}?</p>
+            <button class="btn btn-primary" onclick="submitAnswer('yes')">
+              Ya
+            </button>
+            <button class="btn btn-danger" onclick="submitAnswer('no')">
+              Tidak
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

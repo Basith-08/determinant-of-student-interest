@@ -1,64 +1,152 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+import json
 
 app = Flask(__name__)
 
-rules = {
-    "suka_bernyanyi dan suka_bermain_musik dan memiliki_konsentrasi_dan_ingatan_yang_kuat dan mempunyai_fisik_yang_sehat": {
-        "ekstrakurikuler": "Seni Musik",
-        "presentation": "Ekstrakurikuler Seni Musik adalah kesempatan untuk mengeksplorasi bakat musikal Anda bersama teman-teman sekelas. Bergabunglah dalam latihan musik yang menyenangkan dan tampil di berbagai acara sekolah untuk menampilkan bakat vokal dan musik Anda",
-    },
-    "memiliki_konsentrasi_dan_ingatan_yang_kuat dan mempunyai_fisik_yang_sehat dan suka_menari dan suka_meniru_gerakan_tubuh dan suka_bekerja_sama_dalam_tim": {
-        "ekstrakurikuler": "Seni Tari",
-        "presentation": "Dalam ekstrakurikuler Seni Tari, Anda akan mempelajari gerakan-gerakan yang indah dan ekspresif, menggali berbagai jenis tarian dari budaya berbeda, dan berkolaborasi dengan teman-teman untuk menciptakan karya-karya yang memukau. Bergabunglah dengan kami untuk menggali keindahan seni melalui gerakan tubuh dan ekspresi emosi.",
-    },
-    "mempunyai_fisik_yang_sehat dan suka_bekerja_sama_dalam_tim dan menyukai_bela_diri dan memiliki_jiwa_pantang_menyerah dan mempunyai_mental_yang_kuat": {
-        "ekstrakurikuler": "Pencak silat",
-        "presentation": "Gabunglah dengan ekstrakurikuler Pencak Silat dan kembangkan kekuatan fisik, keterampilan bela diri, serta semangat kebersamaan melalui latihan intensif dan kompetisi yang menarik.",
-    },
-    "mempunyai_fisik_yang_sehat dan suka_bekerja_sama_dalam_tim dan memiliki_jiwa_pantang_menyerah dan mempunyai_mental_yang_kuat dan suka_bermain_futsal_atau_bola dan memiliki_karakter_disiplin dan mempunyai_berat_ideal": {
-        "ekstrakurikuler": "Futsal",
-        "presentation": "Ekstrakurikuler Futsal memberikan kesempatan untuk berlatih teknik olahraga dan kerjasama tim. Bersiaplah untuk terlibat dalam latihan intensif dan pertandingan seru bersama tim futsal sekolah!",
-    },
-    "mempunyai_fisik_yang_sehat dan suka_bekerja_sama_dalam_tim dan memiliki_jiwa_pantang_menyerah dan mempunyai_mental_yang_kuat dan memiliki_karakter_disiplin dan memiliki_jiwa_kejujuran dan tidak_mudah_takut_akan_alam_sekitar dan memiliki_jiwa_kepemimpinan dan memiliki_rasa_bertanggung_jawab": {
-        "ekstrakurikuler": "Pramuka",
-        "presentation": "Pramuka adalah kegiatan yang mengembangkan keterampilan survival, kepemimpinan, dan kebersamaan melalui petualangan alam terbuka, pelatihan keterampilan praktis, serta pengabdian kepada masyarakat. Bergabunglah dengan Pramuka untuk menjelajahi alam, belajar tentang keberanian, dan membangun karakter yang tangguh.",
-    },
-    "mempunyai_fisik_yang_sehat dan suka_bekerja_sama_dalam_tim dan memiliki_jiwa_pantang_menyerah dan mempunyai_mental_yang_kuat dan memiliki_karakter_disiplin dan mempunyai_tinggi_ideal dan mempunyai_postur_tegap dan mampu_melakukan_PBB": {
-        "ekstrakurikuler": "Paskibra",
-        "presentation": "Gabunglah dengan Paskibra untuk pengalaman unik dalam belajar kedisiplinan, kerjasama tim, dan pengembangan kepemimpinan melalui latihan disiplin militer, upacara bendera, dan berpartisipasi dalam acara-acara nasional yang menginspirasi.",
-    },
+kriteria = {
+    "B01": "Suka bernyanyi",
+    "B02": "Suka bermain musik",
+    "B03": "Memiliki konsentrasi dan ingatan yang kuat",
+    "B04": "Mempunyai fisik yang sehat",
+    "B05": "Suka menari",
+    "B06": "Suka meniru gerakan tubuh",
+    "B07": "Suka bekerja sama dalam tim",
+    "B08": "Menyukai bela diri (pencak silat)",
+    "B09": "Memiliki jiwa pantang menyerah",
+    "B10": "Mempunyai mental yang kuat",
+    "B11": "Suka bermain futsal atau bola",
+    "B12": "Memiliki karakter disiplin",
+    "B13": "Mempunyai berat ideal",
+    "B14": "Memiliki jiwa kejujuran",
+    "B15": "Tidak mudah takut akan alam sekitar",
+    "B16": "Memiliki jiwa kepemimpinan",
+    "B17": "Memiliki rasa bertanggung jawab",
+    "B18": "Mempunyai tinggi ideal",
+    "B19": "Mempunyai postur tegap",
+    "B20": "Mampu melakukan PBB",
 }
+
+interests = [
+    kriteria["B01"],
+    kriteria["B02"],
+    kriteria["B03"],
+    kriteria["B04"],
+    kriteria["B05"],
+    kriteria["B06"],
+    kriteria["B07"],
+    kriteria["B08"],
+    kriteria["B09"],
+    kriteria["B10"],
+    kriteria["B11"],
+    kriteria["B12"],
+    kriteria["B13"],
+    kriteria["B14"],
+    kriteria["B15"],
+    kriteria["B16"],
+    kriteria["B17"],
+    kriteria["B18"],
+    kriteria["B19"],
+    kriteria["B20"],
+]
+
+extracurriculars = {
+    "Seni musik": [
+        kriteria["B01"],
+        kriteria["B02"],
+        kriteria["B03"],
+        kriteria["B04"],
+    ],
+    "Seni tari": [
+        kriteria["B03"],
+        kriteria["B04"],
+        kriteria["B05"],
+        kriteria["B06"],
+        kriteria["B07"],
+    ],
+    "Pencak Silat": [
+        kriteria["B04"],
+        kriteria["B07"],
+        kriteria["B08"],
+        kriteria["B09"],
+        kriteria["B10"],
+    ],
+    "Futsal": [
+        kriteria["B04"],
+        kriteria["B07"],
+        kriteria["B09"],
+        kriteria["B10"],
+        kriteria["B11"],
+        kriteria["B12"],
+        kriteria["B13"],
+    ],
+    "Pramuka": [
+        kriteria["B04"],
+        kriteria["B07"],
+        kriteria["B09"],
+        kriteria["B10"],
+        kriteria["B12"],
+        kriteria["B14"],
+        kriteria["B15"],
+        kriteria["B16"],
+        kriteria["B17"],
+    ],
+    "Paskibra": [
+        kriteria["B04"],
+        kriteria["B07"],
+        kriteria["B09"],
+        kriteria["B10"],
+        kriteria["B12"],
+        kriteria["B18"],
+        kriteria["B19"],
+        kriteria["B20"],
+    ],
+}
+
+selected_interests = []
+current_interest_index = 0
+
+
+def hitung_rekomendasi(selected_interests, extracurriculars):
+    results = {}
+    for extracurricular, interest_list in extracurriculars.items():
+        match_count = sum(
+            1 for interest in selected_interests if interest in interest_list
+        )
+        results[extracurricular] = (match_count / len(interest_list)) * 100
+    return results
 
 
 @app.route("/")
-def home():
-    return render_template("index.html")
+def index():
+    return render_template("index.html", interest=interests[0])
 
 
-@app.route("/result", methods=["POST"])
-def result():
-    facts = request.form.getlist("facts")
-    derived_facts = infer_facts(facts)
-    recommendations = calculate_recommendations(derived_facts)
-    return render_template("result.html", recommendations=recommendations)
+@app.route("/submit", methods=["POST"])
+def submit():
+    global selected_interests, current_interest_index
 
+    data = request.get_json()
+    answer = data.get("answer")
 
-def infer_facts(facts):
-    derived_facts = []
-    for rule, _ in rules.items():
-        conditions = rule.split(" dan ")
-        if all(condition in facts for condition in conditions):
-            derived_facts.append(rules[rule])
-    return derived_facts
+    if answer == "yes":
+        selected_interests.append(interests[current_interest_index])
 
+    current_interest_index += 1
 
-def calculate_recommendations(derived_facts):
+    if current_interest_index >= len(interests):
+        results = hitung_rekomendasi(selected_interests, extracurriculars)
+        selected_interests = []
+        current_interest_index = 0
+        return jsonify({"done": True, "results": results})
 
-    recommendations = []
-    for fact in derived_facts:
-        if fact not in recommendations:
-            recommendations.append(fact)
-    return recommendations
+    return jsonify({"done": False, "interest": interests[current_interest_index]})
+``
+
+@app.route("/results", methods=["GET"])
+def results():
+    results = request.args.get("results")
+    data = json.loads(results)
+    return render_template("result.html", data=data)
 
 
 if __name__ == "__main__":
