@@ -140,7 +140,7 @@ def submit():
         return jsonify({"done": True, "results": results})
 
     return jsonify({"done": False, "interest": interests[current_interest_index]})
-``
+
 
 @app.route("/results", methods=["GET"])
 def results():
